@@ -5,10 +5,15 @@ import pygame
 from constants import *
 from player import *
 
+
+
 def main():
     pygame.init()  # Initialize all imported pygame modules
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.time.Clock()  # Create a clock to control the frame rate
+    updatable=pygame.sprite.Group()  # Create a group for updatable objects
+    drawable=pygame.sprite.Group()  # Create a group for drawable objects   
+    Player.containers = (updatable, drawable)  # Set the containers for Player class
     dt=0  # Initialize delta time
     player = Player(SCREEN_WIDTH /2, SCREEN_HEIGHT /2)  # Create a player instance
 
@@ -16,6 +21,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+        for update in updatable:
+            update.update(dt)
+        for draw in drawable:
+            draw.draw(screen)
         player.update(dt)  # Update the player with delta time
         pygame.Surface.fill(screen,color="black")  # Fill the screen with black
         player.draw(screen)  # Draw the player
