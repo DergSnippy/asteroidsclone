@@ -2,8 +2,6 @@ from circleshape import *
 from constants import *
 import pygame
 
-Player.containers = (updatable, drawable)  # Add Player to the updatable and drawable groups
-
 class Player(CircleShape):
     def __init__(self,x,y):
         super().__init__(x, y, PLAYER_RADIUS)

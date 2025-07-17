@@ -3,7 +3,7 @@
 # throughout this file
 import pygame
 from constants import *
-from player import *
+from player import Player
 
 
 
@@ -21,22 +21,15 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        for update in updatable:
-            update.update(dt)
+        updatable.update(dt)
+       
+        pygame.Surface.fill(screen,color="black")  # Fill the screen with black
+
         for draw in drawable:
             draw.draw(screen)
-        player.update(dt)  # Update the player with delta time
-        pygame.Surface.fill(screen,color="black")  # Fill the screen with black
-        player.draw(screen)  # Draw the player
         pygame.display.flip()  # Update the display
         pygame.time.Clock().tick(60)  # Limit the frame rate to 60 FPS
         dt=pygame.time.Clock().tick(60) / 1000.0  # Calculate delta time in seconds
     
-    
-    print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
-
-
 if __name__ == "__main__":
     main()
