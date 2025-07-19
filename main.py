@@ -2,10 +2,12 @@
 # the open-source pygame library
 # throughout this file
 import pygame
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 
 def main():
     pygame.init()  # Initialize all imported pygame modules
@@ -19,6 +21,7 @@ def main():
     AsteroidField.containers = (updatable,)  # Set the containers for AsteroidField class
     Player.containers = (updatable, drawable)  # Set the containers for Player class
     Asteroid.containers = (asteroids, updatable, drawable)  # Set the containers for Asteroid class
+    Shot.containers = (updatable, drawable)  # Set the containers for Shot class
 
     clock = pygame.time.Clock()  # Create a clock to control the frame rate
     dt=0  # Initialize delta time
@@ -30,6 +33,12 @@ def main():
             if event.type == pygame.QUIT:
                 return
         updatable.update(dt)
+
+        # Check for collisions between player and asteroids
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                sys.exit("Game over!")
+                
        
         pygame.Surface.fill(screen,color="black")  # Fill the screen with black
 
